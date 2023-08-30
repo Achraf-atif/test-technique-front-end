@@ -1,0 +1,52 @@
+<form class="row g-3" [formGroup]="siteForm" (ngSubmit)="onSubmit()"> <!-- Create a form with the 'siteForm' FormGroup and bind ngSubmit to the 'onSubmit()' method -->
+
+  <!-- Server Selection Dropdown -->
+  <div class="col-md-6">
+    <div class="form-floating">
+      <select class="form-select" id="floatingServerId" formControlName="serverId">
+        <option value="" disabled selected>Select a server</option>
+        <option *ngFor="let server of servers" [value]="server.id">{{ server.name }}</option>
+      </select>
+      <label for="floatingServerId">Server</label>
+    </div>
+  </div>
+
+  <!-- Site Name Input -->
+  <div class="col-md-6">
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingName" placeholder="Name" formControlName="name">
+      <label for="floatingName">Name</label>
+    </div>
+  </div>
+
+  <!-- Domain Name Input -->
+  <div class="col-md-6">
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingDomain" placeholder="Domain Name" formControlName="domainName">
+      <label for="floatingDomain">Domain Name</label>
+    </div>
+  </div>
+
+  <!-- IP Address Input -->
+  <div class="col-md-6">
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingIpAddress" placeholder="IP Address" formControlName="ipAddress">
+      <label for="floatingIpAddress">IP Address</label>
+    </div>
+  </div>
+
+  <!-- Active Checkbox -->
+  <div class="col-md-6">
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="floatingActive" formControlName="active">
+      <label class="form-check-label" for="floatingActive">Active</label>
+    </div>
+  </div>
+
+  <!-- Buttons for Cancel and Add Site -->
+  <div class="text-end">
+    <button class="btn btn-secondary me-2" type="button" (click)="navigateAndReset()">Cancel</button>
+    <button type="submit" class="btn btn-primary me-2" routerLink="/">Add Site</button>
+  </div>
+
+</form>

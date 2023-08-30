@@ -1,0 +1,25 @@
+<form class="row g-3" [formGroup]="serverForm"> <!-- Create a form with the 'serverForm' FormGroup -->
+
+  <!-- Server Name Input -->
+  <div class="col-md-6">
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingName" placeholder="Name" formControlName="name">
+      <label for="floatingName">Name</label>
+    </div>
+  </div>
+
+  <!-- IP Address Input -->
+  <div class="col-md-6">
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingtext" placeholder="IP Address" formControlName="ipAddress">
+      <label for="floatingtext">IP Address</label>
+    </div>
+  </div>
+
+  <!-- Buttons for Cancel and Submit -->
+  <div class="text-end">
+    <button class="btn btn-secondary me-2" type="button" (click)="navigateAndReset()">Cancel</button>
+    <button type="submit" class="btn btn-primary me-2" (click)="onSubmit()">Submit</button>
+  </div>
+
+</form>

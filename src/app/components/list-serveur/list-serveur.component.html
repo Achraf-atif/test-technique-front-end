@@ -1,0 +1,109 @@
+<div class="row">
+  <div class="col-md-12">
+
+    <!-- Show Sites Section -->
+    <div class="row" *ngIf="showSitesSection">
+
+      <!-- Search Bar -->
+      <form class="d-flex col-md-12">
+        <input type="text" class="form-control form-control-flush ps-10"
+        name="search"
+        [(ngModel)]="search"
+        placeholder="Rechercher..." />
+      </form>
+
+      <!-- Header for Servers -->
+      <div class="row my-3">
+        <div class="col-md-6">
+          <h4 class="">List of Serveurs</h4>
+        </div>
+        <div class="col-md-6" align="right">
+          <button type="button" class="btn btn-info me-2" routerLink="/add-Serveur">
+            ADD Serveur
+          </button>
+          <button type="button" class="btn btn-info" routerLink="/add-site">
+            ADD Site
+          </button>
+        </div>
+      </div>
+
+      <!-- Display Servers -->
+      <div class="col-md-3 mb-3" *ngFor="let serveur of servers | filter: search | paginate: { itemsPerPage: itemsPerPage2, currentPage: p }">
+        <div class="card bg-secondary mb-3" style="max-width: 20rem;" bis_skin_checked="1">
+          <h5 class="card-title card-header bg-active">{{ serveur.name }}</h5>
+          <div class="card-body">
+            <p class="card-text"><strong>IP Address:</strong> {{ serveur.ipAddress }}</p>
+            <button class="btn btn-primary me-2" (click)="toggleDropdown(serveur); toggleSitesSection()">List of Sites</button>
+            <button class="btn btn-outline-danger" (click)="deleteServerFrontEnd(serveur.id)">Delete</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination-wrapper">
+        <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+      </div>
+
+    </div>
+
+    <!-- Show Sites for a Specific Server Section -->
+    <div *ngIf="!showSitesSection">
+
+      <!-- Search Bar -->
+      <form class="d-flex col-md-12">
+        <input type="text" class="form-control form-control-flush ps-10"
+        name="search"
+        [(ngModel)]="search"
+        placeholder="Rechercher..." />
+      </form>
+
+      <!-- Header for Sites of a Server -->
+      <div class="row my-3">
+        <div class="col-md-6">
+          <h4 class="">List of Sites for {{ selectedServer?.name }}</h4>
+        </div>
+        <div class="col-md-6" align="right">
+          <button type="button" class="btn btn-primary me-2" (click)="toggleSitesSection()">All Serveurs</button>
+        </div>
+      </div>
+
+      <!-- Display Sites -->
+      <table class="table table-bordered">
+        <thead>
+          <tr class="table-dark">
+            <th>Name</th>
+            <th>Domain Name</th>
+            <th>IP Address</th>
+            <th>Active</th>
+            <th class="col-md-1">Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="selectedServer">
+          <tr *ngFor="let site of selectedServer.sites | filter: search | paginate: { itemsPerPage: itemsPerPage, currentPage: p }" class="table-active">
+            <td>{{ site.name }}</td>
+            <td>{{ site.domainName }}</td>
+            <td>{{ site.ipAddress }}</td>
+            <td>
+              <ng-container *ngIf="site.active; else inactive">
+                <button class="btn btn-success btn-sm" (click)="toggleSiteStatus(site)">Actif</button>
+              </ng-container>
+              <ng-template #inactive>
+                <button class="btn btn-info btn-sm" (click)="toggleSiteStatus(site)">Inactif</button>
+              </ng-template>
+            </td>
+            <td>
+              <button class="btn btn-outline-danger btn-sm" (click)="deleteSiteFrontEnd(site.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div class="pagination-wrapper">
+        <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+      </div>
+
+    </div>
+
+  </div>
+</div>
